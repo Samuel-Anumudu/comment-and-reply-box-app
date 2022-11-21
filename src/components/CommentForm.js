@@ -1,21 +1,18 @@
 import { useContext, useState } from "react";
 import CommentsContext from "../context/CommentsContext";
-import { v4 as uuidv4 } from "uuid";
 
 function CommentForm() {
   const [content, setContent] = useState("");
-
   const { currentUser, addComment } = useContext(CommentsContext);
-
   const imageURL = currentUser.image && currentUser.image.png;
 
   function handleSendComment() {
     const date = new Date();
+    const timestamp = date.toDateString() + " @ " + date.toLocaleTimeString();
     if (content.trim().length > 0) {
       const newComment = {
-        id: uuidv4(),
         content: content,
-        createdAt: date.toDateString(),
+        createdAt: timestamp,
         score: 0,
         user: {
           ...currentUser,

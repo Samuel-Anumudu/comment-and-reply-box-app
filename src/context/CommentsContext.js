@@ -3,12 +3,16 @@ import { createContext, useState, useEffect } from "react";
 const CommentsContext = createContext();
 
 export const CommentsContextProvider = ({ children }) => {
-  const [displayConfirmationModal, setDisplayConfirmationModal] =
-    useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [id, setId] = useState(null);
   const [comments, setComments] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [displayConfirmationModal, setDisplayConfirmationModal] =
+    useState(false);
+  const [id, setId] = useState(null);
+  const [commentEdit, setCommentEdit] = useState({
+    item: {},
+    isEdited: false,
+  });
 
   // Show Modal
   const showDeleteModal = (id) => {
@@ -16,7 +20,7 @@ export const CommentsContextProvider = ({ children }) => {
     setDisplayConfirmationModal(true);
   };
 
-  // Hide the modal
+  // Hide modal
   const hideConfirmationModal = () => {
     setDisplayConfirmationModal(false);
   };
@@ -65,8 +69,34 @@ export const CommentsContextProvider = ({ children }) => {
     setComments([...comments, data]);
   }
 
+  // Edit Comment
+  const editComment = (item) => {
+    setCommentEdit({
+      item,
+      isEdited: true,
+    });
+  };
+
+  // Update Comment
+  const updateFeedback = async (id, updatedComment) => {
+    const res = await fetch(`/comments/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedComment),
+    });
+
+    const data = await res.json();
+    setComments(
+      comments.map((comment) =>
+        comment.id === id ? { ...comment, ...data } : comment
+      )
+    );
+  };
+
   // Increment Score
-  async function handleScoreIncrement(id) {
+  function handleScoreIncrement(id) {
     const newIncScore = comments
       .map((comment) => {
         if (comment.id !== id) {
@@ -111,10 +141,13 @@ export const CommentsContextProvider = ({ children }) => {
         isLoading,
         displayConfirmationModal,
         id,
+        commentEdit,
         showDeleteModal,
         hideConfirmationModal,
         addComment,
         deleteComment,
+        editComment,
+        updateFeedback,
         handleScoreIncrement,
         handleScoreDecrement,
       }}

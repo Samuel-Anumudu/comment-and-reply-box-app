@@ -1,4 +1,4 @@
-import { FaReply, FaPlus, FaMinus, FaTrash } from "react-icons/fa";
+import { FaReply, FaPlus, FaMinus, FaTrash, FaPen } from "react-icons/fa";
 import { useContext } from "react";
 import CommentsContext from "../context/CommentsContext";
 
@@ -6,6 +6,7 @@ function CommentsItem({ comment }) {
   const {
     showDeleteModal,
     handleScoreIncrement,
+    editComment,
     handleScoreDecrement,
     currentUser,
   } = useContext(CommentsContext);
@@ -41,7 +42,7 @@ function CommentsItem({ comment }) {
               </div>
               <div className="text-base">{comment.content}</div>
             </div>
-            <div className="flex-child">
+            <div className="flex-child flex items-center gap-4">
               {comment.user.username === currentUser.username ? (
                 <button
                   className="flex items-center"
@@ -54,6 +55,15 @@ function CommentsItem({ comment }) {
                 <button className="flex items-center">
                   <FaReply />
                   <span>Reply</span>
+                </button>
+              )}
+              {comment.user.username === currentUser.username && (
+                <button
+                  className="flex items-center"
+                  onClick={() => editComment(comment)}
+                >
+                  <FaPen />
+                  <span>Edit</span>
                 </button>
               )}
             </div>

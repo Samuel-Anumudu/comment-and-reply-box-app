@@ -1,10 +1,17 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import CommentsContext from "../context/CommentsContext";
 
 function CommentForm() {
-  const [content, setContent] = useState("");
-  const { currentUser, addComment } = useContext(CommentsContext);
+  const { currentUser, addComment, commentEdit, updateFeedback } =
+    useContext(CommentsContext);
   const imageURL = currentUser.image && currentUser.image.png;
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    if (commentEdit.isEdited === true) {
+      setContent(commentEdit.item.content);
+    }
+  }, [commentEdit]);
 
   function handleSendComment() {
     const date = new Date();
@@ -18,7 +25,12 @@ function CommentForm() {
           ...currentUser,
         },
       };
-      addComment(newComment);
+      if (commentEdit.isEdited === true) {
+        updateFeedback(commentEdit.item.id, newComment);
+        commentEdit.isEdited = false;
+      } else {
+        addComment(newComment);
+      }
       setContent("");
     }
   }
@@ -45,7 +57,7 @@ function CommentForm() {
             />
           </div>
           <button onClick={handleSendComment} className="btn">
-            Send
+            {commentEdit.isEdited ? "Update" : "Send"}
           </button>
         </div>
       </div>

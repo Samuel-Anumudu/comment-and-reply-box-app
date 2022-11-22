@@ -3,9 +3,11 @@ import { useContext } from "react";
 import CommentsContext from "../context/CommentsContext";
 import CommentsItem from "./CommentsItem";
 import Spinner from "./Spinner";
+import Modal from "./Modal";
 
 function CommentsList() {
-  const { comments, isLoading } = useContext(CommentsContext);
+  const { comments, isLoading, hideConfirmationModal, deleteComment, id } =
+    useContext(CommentsContext);
 
   return isLoading ? (
     <Spinner />
@@ -23,6 +25,11 @@ function CommentsList() {
           </motion.div>
         ))}
       </AnimatePresence>
+      <Modal
+        hideModal={hideConfirmationModal}
+        confirmModal={deleteComment}
+        id={id}
+      />
     </section>
   );
 

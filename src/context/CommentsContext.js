@@ -3,9 +3,23 @@ import { createContext, useState, useEffect } from "react";
 const CommentsContext = createContext();
 
 export const CommentsContextProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [displayConfirmationModal, setDisplayConfirmationModal] =
+    useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [id, setId] = useState(null);
   const [comments, setComments] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
+
+  // Show Modal
+  const showDeleteModal = (id) => {
+    setId(id);
+    setDisplayConfirmationModal(true);
+  };
+
+  // Hide the modal
+  const hideConfirmationModal = () => {
+    setDisplayConfirmationModal(false);
+  };
 
   //  Fetch current user
   const fetchCurrentUser = async () => {
@@ -16,16 +30,27 @@ export const CommentsContextProvider = ({ children }) => {
 
   // Fetch comments
   const fetchComments = async () => {
-    const res = await fetch("/comments?_sort=id");
+    const res = await fetch("/comments");
     const data = await res.json();
+    data.sort((a, b) => (a.score < b.score ? 1 : -1));
     setComments(data);
-    setIsLoading(false);
+    // setIsLoading(false);
   };
 
   useEffect(() => {
     fetchComments();
     fetchCurrentUser();
+    setTimeout(() => setIsLoading(false), 1000);
   }, []);
+
+  // Delete Comment
+  async function deleteComment(id) {
+    await fetch(`/comments/${id}`, {
+      method: "DELETE",
+    });
+    setComments(comments.filter((comment) => comment.id !== id));
+    setDisplayConfirmationModal(false);
+  }
 
   // Add Comment
   async function addComment(newComment) {
@@ -40,46 +65,41 @@ export const CommentsContextProvider = ({ children }) => {
     setComments([...comments, data]);
   }
 
-  // Delete Comment
-  async function deleteComment(id) {
-    await fetch(`/comments/${id}`, {
-      method: "DELETE",
-    });
-    setComments(comments.filter((comment) => comment.id !== id));
-  }
-
   // Increment Score
-  function handleScoreIncrement(id) {
-    const newIncScore = comments.map((comment) => {
-      if (comment.id !== id) {
-        return comment;
-      } else {
-        return {
-          ...comment,
-          score: comment.score + 1,
-        };
-      }
-    });
+  async function handleScoreIncrement(id) {
+    const newIncScore = comments
+      .map((comment) => {
+        if (comment.id !== id) {
+          return comment;
+        } else {
+          return {
+            ...comment,
+            score: comment.score + 1,
+          };
+        }
+      })
+      .sort((a, b) => (a.score <= b.score ? 1 : -1));
     setComments(newIncScore);
   }
 
   // Decrement Score
   function handleScoreDecrement(id) {
-    const newDecScore = comments.map((comment) => {
-      if (comment.score === 0) {
-        return comment;
-      }
+    const newDecScore = comments
+      .map((comment) => {
+        if (comment.score === 0) {
+          return comment;
+        }
 
-      if (comment.id !== id) {
-        return comment;
-      } else {
-        return {
-          ...comment,
-          score: comment.score - 1,
-        };
-      }
-    });
-
+        if (comment.id !== id) {
+          return comment;
+        } else {
+          return {
+            ...comment,
+            score: comment.score - 1,
+          };
+        }
+      })
+      .sort((a, b) => (a.score <= b.score ? 1 : -1));
     setComments(newDecScore);
   }
 
@@ -89,6 +109,10 @@ export const CommentsContextProvider = ({ children }) => {
         comments,
         currentUser,
         isLoading,
+        displayConfirmationModal,
+        id,
+        showDeleteModal,
+        hideConfirmationModal,
         addComment,
         deleteComment,
         handleScoreIncrement,

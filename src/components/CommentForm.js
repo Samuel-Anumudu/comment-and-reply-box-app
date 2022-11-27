@@ -2,8 +2,9 @@ import { useContext, useState, useEffect } from "react";
 import CommentsContext from "../context/CommentsContext";
 
 function CommentForm() {
-  const { currentUser, addComment, commentEdit, updateFeedback } =
+  const { currentUser, addComment, commentEdit, updateFeedback, isDeleted } =
     useContext(CommentsContext);
+
   const imageURL = currentUser.image && currentUser.image.png;
   const [content, setContent] = useState("");
 
@@ -11,7 +12,15 @@ function CommentForm() {
     if (commentEdit.isEdited === true) {
       setContent(commentEdit.item.content);
     }
-  }, [commentEdit]);
+    if (isDeleted) {
+      commentEdit.isEdited = false;
+      setContent("");
+    }
+    // Can work without this cleanup code
+    return () => {
+      commentEdit.isEdited = false;
+    };
+  }, [commentEdit, isDeleted]);
 
   function handleSendComment() {
     const date = new Date();
@@ -47,6 +56,7 @@ function CommentForm() {
               />
             </div>
           </div>
+
           <div className="form-control w-5/6">
             <input
               onChange={(e) => setContent(e.target.value)}

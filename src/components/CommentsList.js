@@ -38,16 +38,18 @@ function CommentsList() {
   return isLoading ? (
     <Spinner />
   ) : (
-    <section className="flex flex-col gap-6">
-      {comments.map((comment) => (
-        <CommentsItem key={comment.id} comment={comment} />
-      ))}
-      <Modal
-        hideModal={hideConfirmationModal}
-        confirmModal={deleteComment}
-        id={id}
-      />
-    </section>
+    <>
+      <section className="flex flex-col gap-6">
+        {comments.map((comment) => (
+          <CommentsItem key={comment.id} comment={comment} />
+        ))}
+        <Modal
+          hideModal={hideConfirmationModal}
+          confirmModal={deleteComment}
+          id={id}
+        />
+      </section>
+    </>
   );
 }
 

@@ -1,6 +1,7 @@
 import { FaReply, FaPlus, FaMinus, FaTrash, FaPen } from "react-icons/fa";
 import { useContext } from "react";
 import CommentsContext from "../context/CommentsContext";
+import RepliesList from "./RepliesList";
 
 function CommentsItem({ comment }) {
   const {
@@ -70,6 +71,10 @@ function CommentsItem({ comment }) {
           </div>
         </div>
       </div>
+
+      {comment && comment.replies && comment.replies.length ? (
+        <RepliesList replies={comment.replies} />
+      ) : null}
     </>
   );
 }

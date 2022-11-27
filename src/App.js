@@ -6,7 +6,7 @@ import CommentForm from "./components/CommentForm";
 function App() {
   return (
     <CommentsContextProvider>
-      <main className="container px-4 mx-auto py-16">
+      <main className="container px-4 mx-auto py-16 w-screen ">
         <CommentsList />
         <CommentForm />
       </main>

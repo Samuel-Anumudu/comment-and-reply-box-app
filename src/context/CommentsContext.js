@@ -5,6 +5,7 @@ const CommentsContext = createContext();
 export const CommentsContextProvider = ({ children }) => {
   const [comments, setComments] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
+  const [isDeleted, setIsDeleted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [displayConfirmationModal, setDisplayConfirmationModal] =
     useState(false);
@@ -13,6 +14,12 @@ export const CommentsContextProvider = ({ children }) => {
     item: {},
     isEdited: false,
   });
+
+  useEffect(() => {
+    fetchComments();
+    fetchCurrentUser();
+    setTimeout(() => setIsLoading(false), 1000);
+  }, []);
 
   // Show Modal
   const showDeleteModal = (id) => {
@@ -41,12 +48,6 @@ export const CommentsContextProvider = ({ children }) => {
     // setIsLoading(false);
   };
 
-  useEffect(() => {
-    fetchComments();
-    fetchCurrentUser();
-    setTimeout(() => setIsLoading(false), 1000);
-  }, []);
-
   // Delete Comment
   async function deleteComment(id) {
     await fetch(`/comments/${id}`, {
@@ -54,6 +55,7 @@ export const CommentsContextProvider = ({ children }) => {
     });
     setComments(comments.filter((comment) => comment.id !== id));
     setDisplayConfirmationModal(false);
+    setIsDeleted(true);
   }
 
   // Add Comment
@@ -75,6 +77,7 @@ export const CommentsContextProvider = ({ children }) => {
       item,
       isEdited: true,
     });
+    setIsDeleted(false);
   };
 
   // Update Comment
@@ -138,6 +141,7 @@ export const CommentsContextProvider = ({ children }) => {
       value={{
         comments,
         currentUser,
+        isDeleted,
         isLoading,
         displayConfirmationModal,
         id,

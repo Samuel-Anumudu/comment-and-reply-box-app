@@ -1,7 +1,7 @@
 import React from "react";
 import { CommentsContextProvider } from "./context/CommentsContext";
-import CommentsList from "./components/CommentsList";
-import CommentForm from "./components/CommentForm";
+import CommentsList from "./components/comments/CommentsList";
+import CommentForm from "./components/comments/CommentForm";
 
 function App() {
   return (

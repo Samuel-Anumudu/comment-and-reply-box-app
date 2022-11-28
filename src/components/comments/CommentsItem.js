@@ -1,10 +1,13 @@
 import { FaReply, FaPlus, FaMinus, FaTrash, FaPen } from "react-icons/fa";
 import { useContext } from "react";
-import CommentsContext from "../context/CommentsContext";
-import RepliesList from "./RepliesList";
+import CommentsContext from "../../context/CommentsContext";
+import RepliesList from "../replies/RepliesList";
+import RepliesForm from "../replies/RepliesForm";
 
 function CommentsItem({ comment }) {
   const {
+    isReplied,
+    handleReplyClick,
     showDeleteModal,
     handleScoreIncrement,
     editComment,
@@ -53,7 +56,12 @@ function CommentsItem({ comment }) {
                   <span>Delete</span>
                 </button>
               ) : (
-                <button className="flex items-center">
+                <button
+                  onClick={() => {
+                    handleReplyClick(comment.id);
+                  }}
+                  className="flex items-center"
+                >
                   <FaReply />
                   <span>Reply</span>
                 </button>
@@ -72,6 +80,7 @@ function CommentsItem({ comment }) {
         </div>
       </div>
 
+      {comment.isReplying && isReplied ? <RepliesForm /> : null}
       {comment && comment.replies && comment.replies.length ? (
         <RepliesList replies={comment.replies} />
       ) : null}

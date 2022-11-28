@@ -1,10 +1,11 @@
 import { FaReply, FaPlus, FaMinus, FaTrash, FaPen } from "react-icons/fa";
 import { useContext } from "react";
-import CommentsContext from "../context/CommentsContext";
+import CommentsContext from "../../context/CommentsContext";
 function RepliesItem({ reply }) {
   const { currentUser } = useContext(CommentsContext);
+
   return (
-    <div className="card w-[100%] mx-auto bg-base-100 ">
+    <div className="card w-[100%] max-w-full mx-auto bg-base-100">
       <div className="card-body">
         <div className="flex items-start justify-between">
           <div className="flex-child flex flex-col items-center gap-4 py-3 px-4 text-center bg-[var(--very-light-gray)] rounded-[10px]">

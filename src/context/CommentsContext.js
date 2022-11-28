@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const CommentsContext = createContext();
 
@@ -7,6 +8,7 @@ export const CommentsContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState([]);
   const [isDeleted, setIsDeleted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isReplied, setIsReplied] = useState(true);
   const [displayConfirmationModal, setDisplayConfirmationModal] =
     useState(false);
   const [id, setId] = useState(null);
@@ -20,6 +22,24 @@ export const CommentsContextProvider = ({ children }) => {
     fetchCurrentUser();
     setTimeout(() => setIsLoading(false), 1000);
   }, []);
+
+  // Replies
+  const handleReplyClick = (id) => {
+    setIsReplied(true);
+    setId(id);
+    setComments(
+      comments.map((comment) => {
+        if (comment.id === id) {
+          return {
+            ...comment,
+            isReplying: true,
+          };
+        } else {
+          return comment;
+        }
+      })
+    );
+  };
 
   // Show Modal
   const showDeleteModal = (id) => {
@@ -69,6 +89,25 @@ export const CommentsContextProvider = ({ children }) => {
     });
     const data = await res.json();
     setComments([...comments, data]);
+  }
+
+  // Add Reply
+  function addReply(id, newReply) {
+    setComments(
+      comments.map((comment) => {
+        if (comment.id === id) {
+          comment.replies.push({
+            ...newReply,
+            id: uuidv4(),
+            replyingTo: comment.user.username,
+          });
+          return comment;
+        } else {
+          return comment;
+        }
+      })
+    );
+    setIsReplied(false);
   }
 
   // Edit Comment
@@ -141,11 +180,14 @@ export const CommentsContextProvider = ({ children }) => {
       value={{
         comments,
         currentUser,
+        isReplied,
         isDeleted,
         isLoading,
         displayConfirmationModal,
         id,
         commentEdit,
+        handleReplyClick,
+        addReply,
         showDeleteModal,
         hideConfirmationModal,
         addComment,

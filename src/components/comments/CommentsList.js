@@ -1,9 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useContext } from "react";
-import CommentsContext from "../context/CommentsContext";
-import CommentsItem from "./CommentsItem";
-import Spinner from "./Spinner";
-import Modal from "./Modal";
+import CommentsContext from "../../context/CommentsContext";
+import CommentsItem from "../comments/CommentsItem";
+import Spinner from "../spinner/Spinner";
+import CommentModal from "./CommentModal";
 
 function CommentsList() {
   const { comments, isLoading, hideConfirmationModal, deleteComment, id } =
@@ -43,7 +43,7 @@ function CommentsList() {
         {comments.map((comment) => (
           <CommentsItem key={comment.id} comment={comment} />
         ))}
-        <Modal
+        <CommentModal
           hideModal={hideConfirmationModal}
           confirmModal={deleteComment}
           id={id}

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import CommentsContext from "../context/CommentsContext";
+import CommentsContext from "../../context/CommentsContext";
 
 function Modal({ hideModal, confirmModal, id }) {
   const { displayConfirmationModal } = useContext(CommentsContext);

@@ -1,3 +1,4 @@
+import { comment } from "postcss";
 import { createContext, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -11,7 +12,9 @@ export const CommentsContextProvider = ({ children }) => {
   const [isReplied, setIsReplied] = useState(true);
   const [displayConfirmationModal, setDisplayConfirmationModal] =
     useState(false);
-  const [id, setId] = useState(null);
+  const [commentId, setCommentId] = useState(null);
+  const [replyId, setReplyId] = useState(null);
+  const [showDeleteReplyModal, setShowDeleteReplyModal] = useState(false);
   const [commentEdit, setCommentEdit] = useState({
     item: {},
     isEdited: false,
@@ -26,7 +29,7 @@ export const CommentsContextProvider = ({ children }) => {
   // Replies
   const handleReplyClick = (id) => {
     setIsReplied(true);
-    setId(id);
+    setCommentId(id);
     setComments(
       comments.map((comment) => {
         if (comment.id === id) {
@@ -41,13 +44,24 @@ export const CommentsContextProvider = ({ children }) => {
     );
   };
 
-  // Show Modal
+  // Show Reply Modal
+  const deleteReplyModal = (id) => {
+    setReplyId(id);
+    setShowDeleteReplyModal(true);
+  };
+
+  // Hide Reply Modal
+  const hideReplyModal = () => {
+    setShowDeleteReplyModal(false);
+  };
+
+  // Show Comment Modal
   const showDeleteModal = (id) => {
-    setId(id);
+    setCommentId(id);
     setDisplayConfirmationModal(true);
   };
 
-  // Hide modal
+  // Hide Comment modal
   const hideConfirmationModal = () => {
     setDisplayConfirmationModal(false);
   };
@@ -76,6 +90,18 @@ export const CommentsContextProvider = ({ children }) => {
     setComments(comments.filter((comment) => comment.id !== id));
     setDisplayConfirmationModal(false);
     setIsDeleted(true);
+  }
+
+  // Delete Reply
+  function deleteReply(replyId) {
+    const replyArray = comments.map((comment) => comment.replies);
+    for (let i = 0; i < replyArray.length; ++i) {
+      if (replyArray[i].length) {
+        replyArray[i].splice(i, 1);
+      }
+    }
+
+    setShowDeleteReplyModal(false);
   }
 
   // Add Comment
@@ -184,14 +210,19 @@ export const CommentsContextProvider = ({ children }) => {
         isDeleted,
         isLoading,
         displayConfirmationModal,
-        id,
+        commentId,
+        replyId,
         commentEdit,
+        showDeleteReplyModal,
+        deleteReplyModal,
         handleReplyClick,
         addReply,
+        hideReplyModal,
         showDeleteModal,
         hideConfirmationModal,
         addComment,
         deleteComment,
+        deleteReply,
         editComment,
         updateFeedback,
         handleScoreIncrement,

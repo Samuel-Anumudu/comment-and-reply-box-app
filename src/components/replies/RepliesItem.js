@@ -1,9 +1,10 @@
 import { FaReply, FaPlus, FaMinus, FaTrash, FaPen } from "react-icons/fa";
 import { useContext } from "react";
 import CommentsContext from "../../context/CommentsContext";
-function RepliesItem({ reply }) {
-  const { currentUser } = useContext(CommentsContext);
 
+function RepliesItem({ reply }) {
+  const { currentUser, deleteReplyModal, editReply } =
+    useContext(CommentsContext);
   return (
     <div className="card w-[100%] max-w-full mx-auto bg-base-100">
       <div className="card-body">
@@ -39,7 +40,10 @@ function RepliesItem({ reply }) {
           </div>
           <div className="flex-child flex items-center gap-4">
             {reply.user.username === currentUser.username ? (
-              <button className="flex items-center">
+              <button
+                onClick={() => deleteReplyModal(reply.id)}
+                className="flex items-center"
+              >
                 <FaTrash />
                 <span>Delete</span>
               </button>
@@ -50,7 +54,10 @@ function RepliesItem({ reply }) {
               </button>
             )}
             {reply.user.username === currentUser.username && (
-              <button className="flex items-center">
+              <button
+                onClick={() => editReply(reply)}
+                className="flex items-center"
+              >
                 <FaPen />
                 <span>Edit</span>
               </button>

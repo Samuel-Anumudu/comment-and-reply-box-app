@@ -6,8 +6,13 @@ import Spinner from "../spinner/Spinner";
 import CommentModal from "./CommentModal";
 
 function CommentsList() {
-  const { comments, isLoading, hideConfirmationModal, deleteComment, id } =
-    useContext(CommentsContext);
+  const {
+    comments,
+    isLoading,
+    hideConfirmationModal,
+    deleteComment,
+    commentId,
+  } = useContext(CommentsContext);
 
   // With Animation
   // return isLoading ? (
@@ -46,7 +51,7 @@ function CommentsList() {
         <CommentModal
           hideModal={hideConfirmationModal}
           confirmModal={deleteComment}
-          id={id}
+          id={commentId}
         />
       </section>
     </>

@@ -3,7 +3,7 @@ import CommentsContext from "../../context/CommentsContext";
 
 function RepliesForm() {
   const [content, setContent] = useState("");
-  const { currentUser, id, addReply } = useContext(CommentsContext);
+  const { currentUser, commentId, addReply } = useContext(CommentsContext);
 
   function handleReply(id) {
     const date = new Date();
@@ -44,7 +44,7 @@ function RepliesForm() {
               className="input input-bordered pb-20 pt-6"
             />
           </div>
-          <button className="btn" onClick={() => handleReply(id)}>
+          <button className="btn" onClick={() => handleReply(commentId)}>
             Reply
           </button>
         </div>

@@ -1,8 +1,11 @@
 import { useContext } from "react";
 import CommentsContext from "../../context/CommentsContext";
+import ReplyModal from "../replies/ReplyModal";
 
 import RepliesItem from "./RepliesItem";
+
 function RepliesList({ replies }) {
+  const { hideReplyModal, replyId, deleteReply } = useContext(CommentsContext);
   return (
     <>
       <article className="sm:w-9/12  mx-auto pl-[3.275rem]">
@@ -15,6 +18,11 @@ function RepliesList({ replies }) {
           </div>
         </div>
       </article>
+      <ReplyModal
+        hideModal={hideReplyModal}
+        confirmModal={deleteReply}
+        id={replyId}
+      />
     </>
   );
 }

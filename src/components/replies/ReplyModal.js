@@ -5,7 +5,7 @@ function ReplyModal({ hideModal, confirmModal, id }) {
   const { showDeleteReplyModal } = useContext(CommentsContext);
   return (
     showDeleteReplyModal && (
-      <div className="custom-modal top-0 right-0 left-0 fixed bg-black/[0.5] w-full h-full z-10 flex justify-center items-center min-h-screen">
+      <div className="custom-modal p-4 lg:p-0  top-0 right-0 left-0 fixed bg-black/[0.5] w-full h-full z-10 flex justify-center items-center min-h-screen">
         <div className="modal-body bg-white rounded-[8px] w-96 p-6">
           <h3 className="font-bold mb-4">Delete reply</h3>
           <p>
@@ -20,7 +20,8 @@ function ReplyModal({ hideModal, confirmModal, id }) {
               No, Cancel
             </button>
             <button
-              onClick={() => confirmModal(id)}
+              // onClick={() => confirmModal(id)}
+              onClick={hideModal}
               className="btn bg-red-400 border-none uppercase px-6 ml-4"
             >
               Yes, Delete

@@ -7,7 +7,7 @@ function RepliesForm() {
 
   function handleReply(id) {
     const date = new Date();
-    const timestamp = date.toDateString() + " @ " + date.toLocaleTimeString();
+    const timestamp = date.toLocaleDateString();
     if (content.trim().length > 0) {
       const newComment = {
         content: content,
@@ -24,10 +24,10 @@ function RepliesForm() {
 
   const imageURL = currentUser.image && currentUser.image.png;
   return (
-    <div className="card w-9/12 mx-auto bg-base-100">
-      <div className="card-body">
-        <div className="flex justify-between">
-          <div className="avatar w-11 h-11">
+    <div className="card w-full lg:w-9/12 mx-auto bg-base-100">
+      <div className="card-body p-6">
+        <div className="block lg:flex justify-between gap-4">
+          <div className="hidden lg:flex avatar w-11 h-11">
             <div className="w-24 rounded-full">
               <img
                 src={imageURL || "./images/avatars/image-juliusomo.png"}
@@ -36,7 +36,7 @@ function RepliesForm() {
             </div>
           </div>
 
-          <div className="form-control w-5/6">
+          <div className="form-control w-full lg:w-5/6">
             <input
               value={content}
               onChange={(e) => setContent(e.target.value)}
@@ -44,9 +44,26 @@ function RepliesForm() {
               className="input input-bordered pb-20 pt-6"
             />
           </div>
-          <button className="btn" onClick={() => handleReply(commentId)}>
+          <button
+            className="lg:block hidden btn"
+            onClick={() => handleReply(commentId)}
+          >
             Reply
           </button>
+          {/*  */}
+          <div className="lg:hidden flex items-center justify-between">
+            <div className=" avatar w-11 h-11">
+              <div className="w-24 rounded-full">
+                <img
+                  src={imageURL || "./images/avatars/image-juliusomo.png"}
+                  alt={currentUser.username}
+                />
+              </div>
+            </div>
+            <button className="btn" onClick={() => handleReply(commentId)}>
+              Reply
+            </button>
+          </div>
         </div>
       </div>
     </div>

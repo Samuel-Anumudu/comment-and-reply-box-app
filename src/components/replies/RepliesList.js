@@ -8,10 +8,10 @@ function RepliesList({ replies }) {
   const { hideReplyModal, replyId, deleteReply } = useContext(CommentsContext);
   return (
     <>
-      <article className="sm:w-9/12  mx-auto pl-[3.275rem]">
-        <div className="flex items-stretch justify-between gap-10">
+      <article className="w-full lg:w-9/12 lg:mx-auto md:pl-[1.75rem] lg:pl-[2.75rem]">
+        <div className="flex items-stretch justify-between gap-4 lg:gap-10">
           <div className="reply__custom-line lg:h-auto lg:w-[2px] bg-[var(--light-gray)] border"></div>
-          <div className="flex flex-col gap-6 grow">
+          <div className="flex flex-col gap-4 grow">
             {replies.map((reply) => (
               <RepliesItem key={reply.id} reply={reply} />
             ))}

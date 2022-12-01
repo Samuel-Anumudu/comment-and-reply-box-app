@@ -5,7 +5,7 @@ function Modal({ hideModal, confirmModal, id }) {
   const { displayConfirmationModal } = useContext(CommentsContext);
   return (
     displayConfirmationModal && (
-      <div className="custom-modal top-0 right-0 left-0 fixed bg-black/[0.5] w-full h-full z-10 flex justify-center items-center min-h-screen">
+      <div className="custom-modal p-4 lg:p-0 top-0 right-0 left-0 fixed bg-black/[0.5] w-full h-full z-10 flex justify-center items-center min-h-screen">
         <div className="modal-body bg-white rounded-[8px] w-96 p-6">
           <h3 className="font-bold mb-4">Delete comment</h3>
           <p>

@@ -1,4 +1,3 @@
-import { comment } from "postcss";
 import { createContext, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -38,7 +37,10 @@ export const CommentsContextProvider = ({ children }) => {
             isReplying: true,
           };
         } else {
-          return comment;
+          return {
+            ...comment,
+            isReplying: false,
+          };
         }
       })
     );
@@ -90,18 +92,6 @@ export const CommentsContextProvider = ({ children }) => {
     setComments(comments.filter((comment) => comment.id !== id));
     setDisplayConfirmationModal(false);
     setIsDeleted(true);
-  }
-
-  // Delete Reply
-  function deleteReply(replyId) {
-    const replyArray = comments.map((comment) => comment.replies);
-    for (let i = 0; i < replyArray.length; ++i) {
-      if (replyArray[i].length) {
-        replyArray[i].splice(i, 1);
-      }
-    }
-
-    setShowDeleteReplyModal(false);
   }
 
   // Add Comment
@@ -222,7 +212,6 @@ export const CommentsContextProvider = ({ children }) => {
         hideConfirmationModal,
         addComment,
         deleteComment,
-        deleteReply,
         editComment,
         updateFeedback,
         handleScoreIncrement,

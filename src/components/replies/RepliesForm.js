@@ -41,17 +41,17 @@ function RepliesForm() {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               type="text"
-              className="input input-bordered pb-20 pt-6"
+              className="cursor-pointer input caret-[var(--moderate-blue)] input-bordered pb-20 focus:outline-none pt-6 outline-none border border-[var(--moderate-blue)]"
             />
           </div>
           <button
-            className="lg:block hidden btn"
+            className="lg:block hidden btn border-none bg-[var(--moderate-blue)] px-8 font-medium hover:bg-[var(--light-grayish-blue)]"
             onClick={() => handleReply(commentId)}
           >
             Reply
           </button>
           {/*  */}
-          <div className="lg:hidden flex items-center justify-between">
+          <div className="lg:hidden flex items-center justify-between mt-4">
             <div className=" avatar w-11 h-11">
               <div className="w-24 rounded-full">
                 <img
@@ -60,7 +60,10 @@ function RepliesForm() {
                 />
               </div>
             </div>
-            <button className="btn" onClick={() => handleReply(commentId)}>
+            <button
+              className="btn border-none bg-[var(--moderate-blue)] px-8 font-medium hover:bg-[var(--light-grayish-blue)]"
+              onClick={() => handleReply(commentId)}
+            >
               Reply
             </button>
           </div>

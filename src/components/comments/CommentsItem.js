@@ -42,7 +42,7 @@ function CommentsItem({ comment }) {
                   {comment.user.username}
                 </div>
                 {comment.user.username === currentUser.username && (
-                  <span className="bg-blue-500 inline-block px-[0.3rem] pb-[0.1rem] text-sm font-bold text-white rounded-[2px]">
+                  <span className="bg-[var(--moderate-blue)] inline-block px-[0.3rem] pb-[0.1rem] text-sm  text-white rounded-[2px]">
                     you
                   </span>
                 )}
@@ -50,25 +50,25 @@ function CommentsItem({ comment }) {
                   {comment.createdAt}
                 </div>
               </div>
-              <div className="text-base text-[var(--grayish-blue)] font-normal">
+              <div className="text-base text-[var(--grayish-blue)] font-light">
                 {comment.content}
               </div>
             </div>
             <div className="hidden flex-child lg:flex items-center gap-4">
               {comment.user.username === currentUser.username ? (
                 <button
-                  className="flex items-center"
+                  className="flex items-center text-[var(--soft-red)] font-medium hover:text-[var(--pale-red)]"
                   onClick={() => showDeleteModal(comment.id)}
                 >
                   <FaTrash />
-                  <span>Delete</span>
+                  <span className="inline-block pl-2">Delete</span>
                 </button>
               ) : (
                 <button
                   onClick={() => {
                     handleReplyClick(comment.id);
                   }}
-                  className="flex items-center text-[var(--moderate-blue)]"
+                  className="flex items-center text-[var(--moderate-blue)] hover:text-[var(--light-grayish-blue)]"
                 >
                   <FaReply />
                   <span className="font-medium inline-block pl-2">Reply</span>
@@ -76,28 +76,30 @@ function CommentsItem({ comment }) {
               )}
               {comment.user.username === currentUser.username && (
                 <button
-                  className="flex items-center"
+                  className="flex items-center text-[var(--moderate-blue)] hover:text-[var(--light-grayish-blue)]"
                   onClick={() => editComment(comment)}
                 >
                   <FaPen />
-                  <span>Edit</span>
+                  <span className="inline-block pl-2 font-medium">Edit</span>
                 </button>
               )}
             </div>
             <div className="flex lg:hidden items-center justify-between">
-              <div className="flex-child flex items-center gap-4 py-3 px-3 text-center bg-[var(--very-light-gray)] rounded-[10px]">
-                <button className="increment text-xs">
+              <div className="flex-child mt-4 flex items-center gap-4 py-3 px-3 text-center bg-[var(--very-light-gray)] rounded-[10px]">
+                <button className="increment text-xs text-[var(--light-grayish-blue)]">
                   <FaPlus onClick={() => handleScoreIncrement(comment.id)} />
                 </button>
-                <p>{comment.score}</p>
-                <button className="decrement text-xs">
+                <p className="font-medium text-[var(--moderate-blue)]">
+                  {comment.score}
+                </p>
+                <button className="decrement text-xs text-[var(--light-grayish-blue)]">
                   <FaMinus onClick={() => handleScoreDecrement(comment.id)} />
                 </button>
               </div>
               <div className="flex-child flex items-center gap-4">
                 {comment.user.username === currentUser.username ? (
                   <button
-                    className="flex items-center"
+                    className="flex items-center text-[var(--soft-red)] font-medium  hover:text-[var(--pale-red)] "
                     onClick={() => showDeleteModal(comment.id)}
                   >
                     <FaTrash />
@@ -108,19 +110,19 @@ function CommentsItem({ comment }) {
                     onClick={() => {
                       handleReplyClick(comment.id);
                     }}
-                    className="flex items-center"
+                    className="flex items-center text-[var(--moderate-blue)] hover:text-[var(--light-grayish-blue)]"
                   >
                     <FaReply />
-                    <span>Reply</span>
+                    <span className="inline-block pl-2 font-medium">Reply</span>
                   </button>
                 )}
                 {comment.user.username === currentUser.username && (
                   <button
-                    className="flex items-center"
+                    className="flex items-center hover:text-[var(--light-grayish-blue)] text-[var(--moderate-blue)]"
                     onClick={() => editComment(comment)}
                   >
                     <FaPen />
-                    <span>Edit</span>
+                    <span className="font-medium inline-block pl-2">Edit</span>
                   </button>
                 )}
               </div>

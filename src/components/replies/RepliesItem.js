@@ -42,7 +42,7 @@ function RepliesItem({ reply }) {
                 {reply.createdAt}
               </div>
             </div>
-            <div className="text-base text-[var(--grayish-blue)] font-normal">
+            <div className="text-base text-[var(--grayish-blue)] font-light">
               <span className="font-medium text-[var(--moderate-blue)]">
                 @{reply.replyingTo}{" "}
               </span>
@@ -53,32 +53,34 @@ function RepliesItem({ reply }) {
             {reply.user.username === currentUser.username ? (
               <button
                 onClick={() => deleteReplyModal(reply.id)}
-                className="flex items-center"
+                className="flex items-center text-[var(--soft-red)] font-medium hover:text-[var(--pale-red)]"
               >
                 <FaTrash />
-                <span>Delete</span>
+                <span className="inline-block pl-2">Delete</span>
               </button>
             ) : (
-              <button className="flex items-center text-[var(--moderate-blue)]">
+              <button className="flex items-center text-[var(--moderate-blue)] hover:text-[var(--light-grayish-blue)]">
                 <FaReply />
                 <span className="font-medium inline-block pl-2">Reply</span>
               </button>
             )}
             {reply.user.username === currentUser.username && (
-              <button className="flex items-center">
+              <button className="flex items-center text-[var(--moderate-blue)] hover:text-[var(--light-grayish-blue)]">
                 <FaPen />
-                <span>Edit</span>
+                <span className="inline-block pl-2 font-medium">Edit</span>
               </button>
             )}
           </div>
 
           <div className="flex lg:hidden items-center justify-between">
             <div className="flex-child flex items-center gap-4 py-3 px-3 text-center bg-[var(--very-light-gray)] rounded-[10px]">
-              <button className="increment text-xs">
+              <button className="increment text-xs text-[var(--light-grayish-blue)]">
                 <FaPlus />
               </button>
-              <p>{reply.score}</p>
-              <button className="decrement text-xs">
+              <p className="font-medium text-[var(--moderate-blue)]">
+                {reply.score}
+              </p>
+              <button className="decrement text-xs text-[var(--light-grayish-blue)]">
                 <FaMinus />
               </button>
             </div>
@@ -86,21 +88,21 @@ function RepliesItem({ reply }) {
               {reply.user.username === currentUser.username ? (
                 <button
                   onClick={() => deleteReplyModal(reply.id)}
-                  className="flex items-center"
+                  className="flex items-center text-[var(--soft-red)] font-medium hover:text-[var(--pale-red)]"
                 >
                   <FaTrash />
-                  <span>Delete</span>
+                  <span className="inline-block pl-2">Delete</span>
                 </button>
               ) : (
-                <button className="flex items-center">
+                <button className="flex items-center text-[var(--moderate-blue)] hover:text-[var(--light-grayish-blue)]">
                   <FaReply />
-                  <span>Reply</span>
+                  <span className="font-medium inline-block pl-2">Reply</span>
                 </button>
               )}
               {reply.user.username === currentUser.username && (
-                <button className="flex items-center">
+                <button className="flex items-center text-[var(--moderate-blue)] hover:text-[var(--light-grayish-blue)]">
                   <FaPen />
-                  <span>Edit</span>
+                  <span className="font-medium inline-block pl-2">Edit</span>
                 </button>
               )}
             </div>

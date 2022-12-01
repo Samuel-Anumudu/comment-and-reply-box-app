@@ -15,14 +15,14 @@ function ReplyModal({ hideModal, confirmModal, id }) {
           <div className="modal-btn mt-4">
             <button
               onClick={hideModal}
-              className="btn border-none uppercase px-6"
+              className="btn border-none uppercase px-6 bg-[var(--grayish-blue)] hover:bg-[var(--dark-blue)]"
             >
               No, Cancel
             </button>
             <button
               // onClick={() => confirmModal(id)}
               onClick={hideModal}
-              className="btn bg-red-400 border-none uppercase px-6 ml-4"
+              className="btn bg-red-400 border-none uppercase px-6 ml-4 bg-[var(--soft-red)] hover:bg-[var(--pale-red)]"
             >
               Yes, Delete
             </button>

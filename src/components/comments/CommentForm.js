@@ -69,13 +69,16 @@ function CommentForm() {
                 value={content}
                 type="text"
                 placeholder="Add a comment…"
-                className="input input-bordered pb-20 pt-6"
+                className="cursor-pointer input caret-[var(--moderate-blue)] input-bordered pb-20 focus:outline-none pt-6 outline-none border border-[var(--moderate-blue)] font-light"
               />
             </div>
-            <button onClick={handleSendComment} className="hidden lg:block btn">
+            <button
+              onClick={handleSendComment}
+              className="hidden lg:block btn border-none bg-[var(--moderate-blue)] px-8 font-medium hover:bg-[var(--light-grayish-blue)]"
+            >
               {commentEdit.isEdited ? "Update" : "Send"}
             </button>
-            <div className="flex lg:hidden items-center justify-between">
+            <div className="flex lg:hidden items-center justify-between mt-4">
               <div className="avatar w-11 h-11">
                 <div className="w-24 rounded-full">
                   <img
@@ -84,7 +87,10 @@ function CommentForm() {
                   />
                 </div>
               </div>
-              <button onClick={handleSendComment} className="btn">
+              <button
+                onClick={handleSendComment}
+                className="btn border-none bg-[var(--moderate-blue)] px-8 font-medium hover:bg-[var(--light-grayish-blue)]"
+              >
                 {commentEdit.isEdited ? "Update" : "Send"}
               </button>
             </div>

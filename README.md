@@ -1,5 +1,8 @@
 # About Project
 
+![desktop-preview](https://user-images.githubusercontent.com/76866672/205215470-2802eaae-db6e-42c5-9855-57634875e9a4.jpg)
+
+
 This is an interactive comments section app. It's a full-stack CRUD application where users can:
 
 - View the optimal layout for the app depending on their device's screen size
